@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Neo">
 <meta property="og:description" content="本文阐述了不同构造函数原型对象间的关系">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-17T14:28:46.263Z">
+<meta property="og:updated_time" content="2018-04-17T14:33:08.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不同原型对象间的关系">
 <meta name="twitter:description" content="本文阐述了不同构造函数原型对象间的关系">
@@ -371,7 +371,14 @@
 <blockquote>
 <p>即Function的原型链上存在Object.prototype，即Function也属于Object类<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<p>综上：<br>1.任意函数(包括Function自身)都是Function类的<br>  A instanceof Function<br>  Function instanceof Function<br>2.一切(包括函数)皆对象<br>任意对象(Object.create(null)及Object.prototype除外)及函数(包括Object)的原型链上都存在Object.prototype，即都是Object类的<br>  A instanceof Object<br>  Function instanceof Object<br>  Object instanceof Object</p>
+<p>综上：<br>1.任意函数(包括Function自身)都是Function类的</p>
+<blockquote>
+<p>A instanceof Function<br>Function instanceof Function</p>
+</blockquote>
+<p>2.一切(包括函数)皆对象<br>任意对象(Object.create(null)及Object.prototype除外)及函数(包括Object)的原型链上都存在Object.prototype，即都是Object类的</p>
+<blockquote>
+<p>A instanceof Object<br>Function instanceof Object<br>Object instanceof Object</p>
+</blockquote>
 
       
     </div>
@@ -411,6 +418,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/super/" rel="prev" title="javascript中的super解析">
+                javascript中的super解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -478,7 +489,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
