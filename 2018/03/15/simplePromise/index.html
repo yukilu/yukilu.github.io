@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="">
+<html class="theme-next gemini use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
+<meta name="description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts">
 <meta name="keywords" content="simplified">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简化版Promise">
 <meta property="og:url" content="http://yoursite.com/2018/03/15/simplePromise/index.html">
 <meta property="og:site_name" content="Neo">
-<meta property="og:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
+<meta property="og:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-17T10:51:04.096Z">
+<meta property="og:updated_time" content="2018-04-17T11:10:13.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简化版Promise">
-<meta name="twitter:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
+<meta name="twitter:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts">
 
 
 
@@ -98,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -312,6 +312,7 @@
       
         <p>Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法</p>
 <p>为了使代码类型清晰，这里选择了使用typescript来写，源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/myClass/simplePromise.ts" target="_blank" rel="noopener">simplePromise.ts</a></p>
+<a id="more"></a>
 <h2 id="类型定义"><a href="#类型定义" class="headerlink" title="类型定义"></a>类型定义</h2><p>定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executor函数类型，就是new Promise(executor)时用的</span></span><br><span class="line"><span class="keyword">interface</span> Executor&lt;T&gt; &#123;</span><br><span class="line">    (resolve: <span class="function">(<span class="params">value: T</span>) =&gt;</span> <span class="built_in">void</span>, reject ?: <span class="function">(<span class="params">error: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 成功回调函数类型，(v: T) =&gt; void，简单起见，无返回值</span></span><br><span class="line"><span class="keyword">interface</span> Fulfilled&lt;T&gt; &#123;</span><br><span class="line">    (value: T): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 失败回调函数类型，(e: any) =&gt; void，简单起见，无返回值</span></span><br><span class="line"><span class="keyword">interface</span> Rejected &#123;</span><br><span class="line">    (error: <span class="built_in">any</span>): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h2><p>&emsp;&emsp;cachedValue、cachedError为缓存决议时传入的值或错误用的</p>
@@ -531,7 +532,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 

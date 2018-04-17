@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="">
+<html class="theme-next gemini use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -93,7 +93,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -309,11 +309,8 @@
 
       
         
-          
-          Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法
-为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts
-类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败
-          ...
+          <p>Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法</p>
+<p>为了使代码类型清晰，这里选择了使用typescript来写，源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/myClass/simplePromise.ts" target="_blank" rel="noopener">simplePromise.ts</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/15/simplePromise/#more" rel="contents">
@@ -437,11 +434,8 @@
 
       
         
-          
-          根据RxJS，用es6的语法自己实现了一个MyRxJS，用自己的方法基本实现了所有操作符
-源码见MyRxJS.js
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505
-          ...
+          <p>根据RxJS，用es6的语法自己实现了一个MyRxJS，用自己的方法基本实现了所有操作符</p>
+<p>源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/tree/master/rxjs" target="_blank" rel="noopener">MyRxJS.js</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/MyRxJS/#more" rel="contents">
@@ -565,11 +559,8 @@
 
       
         
-          
-          根据Promise的功能，自己实现了一个MyPromise，功能与原生Promise相同
-源码见MyPromise.ts
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849
-          ...
+          <p>根据Promise的功能，自己实现了一个MyPromise，功能与原生Promise相同</p>
+<p>源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/myClass/MyPromise_ts.ts" target="_blank" rel="noopener">MyPromise.ts</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/MyPromise/#more" rel="contents">
@@ -693,13 +684,8 @@
 
       
         
-          
-          simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数
-combineReducer和createReducer函数由于相同，此处就省略了
-createStore
-
-较之为实现中间件功能的函数，多引入了一个enhancer参数，这个参数是由appl
-          ...
+          <p>simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数</p>
+<p>combineReducer和createReducer函数由于相同，此处就省略了</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/simpleAdvancedRedux/#more" rel="contents">
@@ -823,10 +809,7 @@ createStore
 
       
         
-          
-          实现了一个最简单的react-redux，实现了核心组件Provider及核心函数connect，没做错误处理，并简化了Connect组件，去掉了非必要属性，并且无法嵌套，只能单一使用，但是该简单实现，基本保留了源码的设计思想，如selector, factory等
-React &amp; Prop
-          ...
+          <p>实现了一个最简单的react-redux，实现了核心组件Provider及核心函数connect，没做错误处理，并简化了Connect组件，去掉了非必要属性，并且无法嵌套，只能单一使用，但是该简单实现，基本保留了源码的设计思想，如selector, factory等</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/simpleReactRedux/#more" rel="contents">
@@ -950,12 +933,9 @@ React &amp; Prop
 
       
         
-          
-          简化版redux，未实现中间件，具体实现过程与源码不同，简化了逻辑，但实现思路相同
-完整源码见simpleRedux.js
-简化版本redux，实现了createStore, combineReducers, createReducer函数，核心函数是createStore，另外两个不一定能用到
-c
-          ...
+          <p>简化版redux，未实现中间件，具体实现过程与源码不同，简化了逻辑，但实现思路相同</p>
+<p>完整源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/redux/simpleRedux.js" target="_blank" rel="noopener">simpleRedux.js</a></p>
+<p>简化版本redux，实现了createStore, combineReducers, createReducer函数，核心函数是createStore，另外两个不一定能用到</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/simpleRedux/#more" rel="contents">
@@ -1079,14 +1059,8 @@ c
 
       
         
-          
-          simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述
-完整源码见simpleAdvancedReact.js
-React.createElement
-React.createElement(type, props, …children)
-
-123456function 
-          ...
+          <p>simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述</p>
+<p>完整源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/react/reactAdvancedMount.js" target="_blank" rel="noopener">simpleAdvancedReact.js</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/simpleAdvancedReact/#more" rel="contents">
@@ -1210,15 +1184,8 @@ React.createElement(type, props, …children)
 
       
         
-          
-          实现react主要功能的简易代码，并能追溯各Component的子组件
-完整源码见simpleReact.js
-React.createElement
-仿照React.createElement定义创建element的函数
-
-
-返回值形如 { type: A, props: { propName: 
-          ...
+          <p>实现react主要功能的简易代码，并能追溯各Component的子组件</p>
+<p>完整源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/react/reactMount.js" target="_blank" rel="noopener">simpleReact.js</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/simpleReact/#more" rel="contents">
@@ -1342,11 +1309,8 @@ React.createElement
 
       
         
-          
-          模仿jQuery实现的iQuery，当然只是实现了部分基本功能
-源码见iQuery.js
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657
-          ...
+          <p>模仿jQuery实现的iQuery，当然只是实现了部分基本功能</p>
+<p>源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/iQuery/iQuery-0.1.js" target="_blank" rel="noopener">iQuery.js</a></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/11/iQuery/#more" rel="contents">
@@ -1470,10 +1434,7 @@ React.createElement
 
       
         
-          
-          compatibilityconclude some js compatibilities
-0.notes0.1  -  means don’t support0.2 old IE means IE5~81.currentStyle||getComputedByStyle1.1 element.cu
-          ...
+          <h1 id="compatibility"><a href="#compatibility" class="headerlink" title="compatibility"></a>compatibility</h1><p>conclude some js compatibilities<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/03/08/compatibility/#more" rel="contents">
@@ -1628,7 +1589,7 @@ React.createElement
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
