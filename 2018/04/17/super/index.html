@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Neo">
 <meta property="og:description" content="本文对JavaScript中的super在不同情境下指向的值进行了分析">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-17T14:43:08.143Z">
+<meta property="og:updated_time" content="2018-04-17T14:49:33.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript中的super解析">
 <meta name="twitter:description" content="本文对JavaScript中的super在不同情境下指向的值进行了分析">
@@ -310,17 +310,21 @@
       
 
       
-        <p>本文对JavaScript中的super在不同情境下指向的值进行了分析<br><a id="more"></a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/super" target="_blank" rel="noopener">super</a></p>
+        <p>本文对JavaScript中的super在不同情境下指向的值进行了分析<br><a id="more"></a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/super" target="_blank" rel="noopener">super-mdn</a></p>
 <p>super引用只存在于方法简写之内，其他上下文中使用super会报错<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> friend = &#123;</span><br><span class="line">    getGreeting: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">super</span>.getGreeting() + <span class="string">', hi!'</span>;    <span class="comment">// 语法错误</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>1.super用在构造函数中时，表示父类构造器<br>2.super用在方法中时，super指向当前方法所属对象(即当前方法的[[HomeObject]])的原型对象([[prototype]]/<strong>proto</strong>)<br>es6中对方法进行了定义，ES6 则正式做出了定义：方法是一个拥有 [[HomeObject]] 内部属性的函数，此内部属性指向该方法所属的对象</p>
+<p>1.super用在构造函数中时，表示父类构造器<br>2.super用在方法中时，super指向当前方法所属对象(即当前方法的[[HomeObject]])的原型对象([[prototype]]/__proto__)</p>
+</blockquote>
+<blockquote>
+<p>es6中对方法进行了定义，ES6 则正式做出了定义：方法是一个拥有 [[HomeObject]] 内部属性的函数，此内部属性指向该方法所属的对象</p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">    getGreeting() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Hello'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> friend = &#123;</span><br><span class="line">    getGreeting() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getGreeting() + <span class="string">', hi!'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(friend, person);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> relative = <span class="built_in">Object</span>.create(friend);</span><br><span class="line"></span><br><span class="line"><span class="comment">// super引用并非是动态的，它总能指向正确的对象，此处super.getGreeting 指向 person.getGreeting，而不管多少对象继承了此方法</span></span><br><span class="line"><span class="built_in">console</span>.log(person.getGreeting());    <span class="comment">// Hello</span></span><br><span class="line"><span class="built_in">console</span>.log(friend.getGreeting());    <span class="comment">// Hello, hi!</span></span><br><span class="line"><span class="built_in">console</span>.log(relative.getGreeting());    <span class="comment">// Hello, hi!</span></span><br></pre></td></tr></table></figure>
-<p>当上述规则应用于原型继承时，静态方法中，super表示父类中同名静态方法，普通方法中super表示父类中的同名普通方法<br>实际上class是个语法糖，本质还是原型继承，而继承又分为两种情况，静态方法的继承和非静态方法的继承<br>class Father, class Son，本质上Father和Son就是函数，是对应的constructor函数，而js中函数也是对象，所以静态方法挂载在Father,Son函数上，而普通方法是在Father.prototype和Son.prototype上<br>当Father extends Son 时，Son.<strong>proto</strong>指向Father，所以Son能继承Father上的静态函数，而Son.prototype.<strong>proto</strong>指Father.prototype，所以Son的实例可以调用Father原型上的方法</p>
-<p>对于super来说，不论出于静态方法还是普通方法中时，都符合上述规则<br>1.当super位于Son静态函数中时<br>Son.staticMethod中，该staticMethod的[[HomeObject]]就是Son，然后super指向[[HomeObject]]即Son.<strong>proto</strong>，就是Father，<br>所以super -&gt; Father，在Son.staticMethod中调用super.staticMethod时，调用的就是Father.staticMethod</p>
-<p>2.当super位于Son的原型对象上的方法中时<br>如Son的实例s = new Son(0, ‘s’)，当调用s.method()时，该method由于是在原型对象上的，即method位于Son.prototype上，所以method的[[HomeObject]]是Son.prototype，所以其中的super指向[[HomeObject]]的<strong>proto</strong>，即Son.prototype.<strong>proto</strong>，就是Father.prototype，所以在Son实例s上调用method函数时，其中的super.method就是Father.prototype.method</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><blockquote>
-<p>1.super用在方法中时，super指向当前方法所属对象的原型对象(<strong>proto</strong>)<br>2.应用于继承时，应用上述规则的结果就是子类中不论静态方法还是普通方法中的super均对应父类中的同名方法</p>
+<p>当上述规则应用于原型继承时，静态方法中，super表示父类中同名静态方法，普通方法中super表示父类中的同名普通方法<br>实际上class是个语法糖，本质还是原型继承，而继承又分为两种情况，静态方法的继承和非静态方法的继承<br>class Father, class Son，本质上Father和Son就是函数，是对应的constructor函数，而js中函数也是对象，所以静态方法挂载在Father,Son函数上，而普通方法是在Father.prototype和Son.prototype上<br>当Father extends Son 时，Son.__proto__指向Father，所以Son能继承Father上的静态函数，而Son.prototype.__proto__指Father.prototype，所以Son的实例可以调用Father原型上的方法</p>
+<p>对于super来说，不论出于静态方法还是普通方法中时，都符合上述规则<br>1.当super位于Son静态函数中时<br>Son.staticMethod中，该staticMethod的[[HomeObject]]就是Son，然后super指向[[HomeObject]]即Son.__proto__，就是Father，<br>所以super -&gt; Father，在Son.staticMethod中调用super.staticMethod时，调用的就是Father.staticMethod</p>
+<p>2.当super位于Son的原型对象上的方法中时<br>如Son的实例s = new Son(0, ‘s’)，当调用s.method()时，该method由于是在原型对象上的，即method位于Son.prototype上，所以method的[[HomeObject]]是Son.prototype，所以其中的super指向[[HomeObject]]的__proto__，即Son.prototype.__proto__，就是Father.prototype，所以在Son实例s上调用method函数时，其中的super.method就是Father.prototype.method</p>
+<p>总结:</p>
+<blockquote>
+<p>1.super用在方法中时，super指向当前方法所属对象的原型对象(__proto__)<br>2.应用于继承时，应用上述规则的结果就是子类中不论静态方法还是普通方法中的super均对应父类中的同名方法</p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(id) &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> staticMethod() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'father_static'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    method() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'father_method'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">Father</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(id, name) &#123;</span><br><span class="line">        <span class="keyword">super</span>(id);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> staticMethod() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.staticMethod() + <span class="string">' son_staticMethod'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    method() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.method() + <span class="string">' son_method'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = Son(<span class="number">0</span>, <span class="string">'s'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s.staticMethod());</span><br><span class="line"><span class="built_in">console</span>.log(s.method());</span><br></pre></td></tr></table></figure>
       
@@ -412,17 +416,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -473,22 +468,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结:</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
