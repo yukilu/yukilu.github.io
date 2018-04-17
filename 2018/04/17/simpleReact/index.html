@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;emsp;&amp;emsp;实现react主要功能的简易代码，并能追溯各Component的子组件 &amp;emsp;&amp;emsp;完整源码见simpleReact.js React.createElement 仿照React.createElement定义创建element的函数   返回值形如 { type: A, props: { propName: propKey } }，{ type: ‘div’,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/simpleReact/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;实现react主要功能的简易代码，并能追溯各Component的子组件 &amp;emsp;&amp;emsp;完整源码见simpleReact.js React.createElement 仿照React.createElement定义创建element的函数   返回值形如 { type: A, props: { propName: propKey } }，{ type: ‘div’,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-03-11T11:49:45.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;实现react主要功能的简易代码，并能追溯各Component的子组件 &amp;emsp;&amp;emsp;完整源码见simpleReact.js React.createElement 仿照React.createElement定义创建element的函数   返回值形如 { type: A, props: { propName: propKey } }，{ type: ‘div’,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/17/simpleReact/"/>
+
+
+
+
+
+  <title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/simpleReact/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T17:44:08+08:00">
+                2018-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;实现react主要功能的简易代码，并能追溯各Component的子组件</p>
+<p>&emsp;&emsp;完整源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/react/reactMount.js" target="_blank" rel="noopener">simpleReact.js</a></p>
+<h2 id="React-createElement"><a href="#React-createElement" class="headerlink" title="React.createElement"></a>React.createElement</h2><blockquote>
+<p>仿照React.createElement定义创建element的函数</p>
+</blockquote>
+<blockquote>
+<p>返回值形如 { type: A, props: { propName: propKey } }，{ type: ‘div’, props: { propName: propKey } }</p>
+</blockquote>
+<blockquote>
+<p>在JSX中，自定义组件以大写开头，如<component>，会被编译为React.createElement(Component, props, …children)，而原生DOM组件，以小写字母开头，如&lt;div>&lt;/div>，会被编译为React.createElement(“div”, props, …children)</component></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createElement</span>(<span class="params">type, props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!props)</span><br><span class="line">        props = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123; type, props &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="React-Component组件"><a href="#React-Component组件" class="headerlink" title="React.Component组件"></a>React.Component组件</h2><blockquote>
+<p>class MyComponent extends React.Component { … }</p>
+</blockquote>
+<blockquote>
+<p>仿照React.Component定义一个Component，es6的中的类继承时，会继承两种属性</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.原型对象上的方法及属性  Component.prototype  如Component.prototype.a</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.挂载在函数上的静态变量  Component            如Component.b</p>
+</blockquote>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span> </span>&#123; &#125;</span><br><span class="line">Component.isClass = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="instantiateComponent-实例化Component的函数"><a href="#instantiateComponent-实例化Component的函数" class="headerlink" title="instantiateComponent(实例化Component的函数)"></a>instantiateComponent(实例化Component的函数)</h2><blockquote>
+<p>实例化Component函数，element可分为两类</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.type为function(es6的class只是语法糖，本质也是function)，即为react组件</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.type为string，即为DOM组件</p>
+</blockquote>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instantiateComponent</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> type = element.type;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CompositeComponent(element);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'string'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DOMComponent(element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="isClass-判定组件是否是类的函数"><a href="#isClass-判定组件是否是类的函数" class="headerlink" title="isClass(判定组件是否是类的函数)"></a>isClass(判定组件是否是类的函数)</h2><blockquote>
+<p>react组件为class时，自定义一个静态变量isClass，值设为true</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isClass</span>(<span class="params">type</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span> &amp;&amp; type.isClass)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="复合组件及DOM组件"><a href="#复合组件及DOM组件" class="headerlink" title="复合组件及DOM组件"></a>复合组件及DOM组件</h2><blockquote>
+<p>以下定义了CompositeComponent及DOMComponent</p>
+</blockquote>
+<blockquote>
+<p>在CompositeComponent中，实例化的Component挂载element,publicInstance,renderedComponent，针对React组件</p>
+</blockquote>
+<blockquote>
+<p>在DOMComponent中，实例化的Component挂载element,node,childComponents，针对DOM组件</p>
+</blockquote>
+<blockquote>
+<p>渲染过程大概为:</p>
+</blockquote>
+<blockquote>
+<p>考虑根节点</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.当为react组件时，由于react组件总会render另一个组件，可能为react组件或DOM组件，若还为react组件时，则继续render…直到为DOM组件为止，创建该DOM元素，步骤同2</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.当为DOM组件时，则创建该DOM元素，并将其包含的子组件全部渲染，子组件若为react组件，步骤同1，若为DOM组件，步骤同2，然后将渲染得到的子节点加入当前节点中</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>通过CompositeComponent及DOMComponent函数创建对象，并将上述的element和react组件实例或DOM组件node挂载到自己对应的对象上，这样通过上述渲染过程，就可以形成一个层级结构，在根组件重新渲染时，可以追溯之前的子组件，并比较新的子组件，若相同，则不需要重新渲染，直接使用原组件即可，如此可以提高性能。</p>
+</blockquote>
+<blockquote>
+<p>当然其实不通过这两个函数建立新对象，直接使用element或者element.type实例化的对象也是可以的，只需要将需要的属性直接挂载上去即可，但是这样就会污染原来的对象，这种做法并不好，不如直接自己建立一个新对象，然后将需要的属性挂载上去好些</p>
+</blockquote>
+<blockquote>
+<p>上述过程，类似于递归，当render的结果为react组件时，则不断递归，结束条件为当render的结果为DOM组件。</p>
+</blockquote>
+<blockquote>
+<p>例子如下，渲染过程如箭头所示<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> A = <span class="function"><span class="params">props</span> =&gt;</span> &lt;B /&gt;;</span><br><span class="line"><span class="keyword">const</span> B = <span class="function"><span class="params">props</span> =&gt;</span> &lt;C /&gt;;</span><br><span class="line"><span class="keyword">const</span> C = <span class="function"><span class="params">props</span> =&gt;</span> &lt;div&gt;&lt;/div&gt;;</span><br><span class="line">A -&gt; B -&gt; C -&gt; div     &lt;div&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>A,B同上<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> C = <span class="function"><span class="params">props</span> =&gt;</span> &lt;div&gt;&lt;D /&gt;&lt;p&gt;&lt;/p&gt;&lt;div&gt;;</span><br><span class="line">const D = props =&gt; &lt;E /&gt;;</span><br><span class="line">const E = props =&gt; &lt;h2&gt;&lt;/h2&gt;;</span><br><span class="line">A -&gt; B -&gt; C -&gt; div               &lt;div&gt;</span><br><span class="line">                   D -&gt; E -&gt; h2    &lt;h2&gt;&lt;/h2&gt;</span><br><span class="line">                   p               &lt;p&gt;&lt;/p&gt;</span><br><span class="line">                                  &lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="CompositeComponent-复合组件"><a href="#CompositeComponent-复合组件" class="headerlink" title="CompositeComponent(复合组件)"></a>CompositeComponent(复合组件)</h3><blockquote>
+<p>CompositeComponent，复合组件，constructor函数可以看出，在其实例下挂载了以下属性</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.currentElement，即传入的element    { type: A, props: { a: 0 } }</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.publicInstance，实例化element.type指向的react组件    publicInstance = new A(props); publicInstance.props = props;</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>3.renderedComponent，通过publicInstance.render后的element再实例化的组件，renderedElement = publicInstance.render();  renderedComponent = instantiateComponent(renderedElement);</p>
+</blockquote>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(element) &#123;</span><br><span class="line">        <span class="keyword">this</span>.currentElement = element;</span><br><span class="line">        <span class="keyword">this</span>.renderedComponent = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.publicInstance = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mount() &#123;</span><br><span class="line">        <span class="keyword">const</span> element = <span class="keyword">this</span>.currentElement;</span><br><span class="line">        <span class="keyword">const</span> type = element.type;</span><br><span class="line">        <span class="keyword">const</span> props = element.props;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> publicInstance = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> renderedElement = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> renderedComponent = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isClass(type)) &#123; </span><br><span class="line">            <span class="comment">// type为class时实例化element.type指向的react组件</span></span><br><span class="line">            publicInstance = <span class="keyword">new</span> type(props);</span><br><span class="line">            <span class="comment">// 将props挂载到实例上，就可以在实例中使用this.props访问props</span></span><br><span class="line">            publicInstance.props = props;</span><br><span class="line">            <span class="comment">// 调用react组件的实例上的render函数，返回render后的element</span></span><br><span class="line">            renderedElement = publicInstance.render();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span>)</span><br><span class="line">            <span class="comment">// 当type为普通函数时，直接调用type(props)，得到render的element，因是普通函数，非类，</span></span><br><span class="line">            <span class="comment">// publicInstance不存在，不用设置，前面默认为null</span></span><br><span class="line">            renderedElement = type(props);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将上述render得到的element，通过instantiateComponent实例化，因为element.type不定，可能继续</span></span><br><span class="line">        <span class="comment">// 是react组件，也可能为DOM组件</span></span><br><span class="line">        renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">        <span class="comment">// 挂载publicInstance到该CompositeComponent上，就可以通过该实例访问到对应的react组件的实例</span></span><br><span class="line">        <span class="keyword">this</span>.pulicInstance = publicInstance;</span><br><span class="line">        <span class="comment">// 挂载renderedComponent，这样就可以知道当前Component的下一个Component是谁，就可以将结构串起来</span></span><br><span class="line">        <span class="keyword">this</span>.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 此处类似于递归，并且是个尾递归</span></span><br><span class="line"><span class="comment">         * 若假设当前组件为rootComponent,则在mountTree中渲染时，rootComponent.mount()启动，</span></span><br><span class="line"><span class="comment">         * 执行rootComponent.renderedComponent.mount()</span></span><br><span class="line"><span class="comment">         * 继续执行rootComponent.renderedComponent.renderedComponent.mount()... 层层mount下去，</span></span><br><span class="line"><span class="comment">         * 直到到达DOMComponent时返回node</span></span><br><span class="line"><span class="comment">         * unmount, receive及getHostNode函数原理同上</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 渲染示意图</span></span><br><span class="line"><span class="comment">         * rtC = rootComponent, rC = renderedComponent, m = mount</span></span><br><span class="line"><span class="comment">         * CC = CompositeComponent, DOMC = DOMComponent</span></span><br><span class="line"><span class="comment">         * rtC.m() -&gt; rtC.rC.m() -&gt; rtC.rC.rC.m() -&gt; rtC.rC.rC.rC.m() -&gt; ... -&gt; rtC.rc...rc.m() =&gt; node</span></span><br><span class="line"><span class="comment">         * CC             CC               CC                  CC        CC              DOMC   =  node</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">return</span> renderedComponent.mount();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DOMComponent-DOM组件"><a href="#DOMComponent-DOM组件" class="headerlink" title="DOMComponent(DOM组件)"></a>DOMComponent(DOM组件)</h3><blockquote>
+<p>DOMComponent DOM组件，实例挂载了以下属性</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>1.currentElement，即传入的element</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.childComponents，即根据props.children.map(instantiateComponent)得到的，以用来追溯props.children对应的子组件<br>3.node，根据element.type生成的原生DOM节点，并了加入各childNodes子节点</p>
+</blockquote>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(element) &#123;</span><br><span class="line">        <span class="keyword">this</span>.currentElement = element;</span><br><span class="line">        <span class="keyword">this</span>.childComponents = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.node = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mount() &#123;</span><br><span class="line">        <span class="keyword">const</span> element = <span class="keyword">this</span>.currentElement;</span><br><span class="line">        <span class="keyword">const</span> type = element.type;</span><br><span class="line">        <span class="keyword">const</span> props = element.props;</span><br><span class="line">        <span class="comment">// DOMComponent中，要对children进行渲染，所以单独列出，而CompositeComponent中则不会</span></span><br><span class="line">        <span class="comment">// 对其children进行渲染</span></span><br><span class="line">        <span class="keyword">let</span> children = props.children;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> childComponents = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> childNodes = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建当前根节点并将node属性挂载上去</span></span><br><span class="line">        <span class="keyword">const</span> node = <span class="built_in">document</span>.createElement(type);</span><br><span class="line">        <span class="keyword">this</span>.node = node;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在node节点上设置props中的属性</span></span><br><span class="line">        <span class="built_in">Object</span>.keys(props).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (propName !== <span class="string">'children'</span>)</span><br><span class="line">                node.setAttribute(propName, props[propName]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// children不存在时为空数组，不然下面children.map要报错</span></span><br><span class="line">        <span class="keyword">if</span> (!children)</span><br><span class="line">            children = [];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 当children为一个元素时，children并不是数组，多个元素才会形成数组，所以此处对一个元素进行处理</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(children))</span><br><span class="line">            children = [children];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用instantiateComponent对children中每个组件进行处理，并挂载上去，这样重新渲染时好</span></span><br><span class="line">        <span class="comment">// 追溯上次的子元素是哪些</span></span><br><span class="line">        childComponents = children.map(instantiateComponent);</span><br><span class="line">        <span class="keyword">this</span>.childComponents = childComponents;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用每个Component的mount函数，返回对应各自对应的DOM节点</span></span><br><span class="line">        childNodes = childComponents.map(<span class="function"><span class="params">childComponent</span> =&gt;</span> childComponent.mount());</span><br><span class="line">        <span class="comment">// 将DOM子节点逐个加入当前node父节点中</span></span><br><span class="line">        childNodes.map(<span class="function"><span class="params">childNode</span> =&gt;</span> &#123;</span><br><span class="line">            node.appendChild(childNode);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将当前node节点返回，子节点已渲染完成并都加入了node父节点中</span></span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="mountTree-渲染组件树的函数"><a href="#mountTree-渲染组件树的函数" class="headerlink" title="mountTree(渲染组件树的函数)"></a>mountTree(渲染组件树的函数)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountTree</span>(<span class="params">element, containerNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> rootComponent = instantiateComponent(element);</span><br><span class="line">    <span class="comment">// 根组件的mount函数，触发了其下各层子组件的mount()，形成了层级，并处理了各react组件或DOM组件，</span></span><br><span class="line">    <span class="comment">// 最终返回了DOM根节点</span></span><br><span class="line">    <span class="keyword">const</span> rootNode = rootComponent.mount();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将上述mount()得到的DOM根节点加入指定的containerNode中</span></span><br><span class="line">    containerNode.appendChild(rootNode);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/17/simplePromise/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/compatibility/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Neo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-createElement"><span class="nav-number">1.</span> <span class="nav-text">React.createElement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Component组件"><span class="nav-number">2.</span> <span class="nav-text">React.Component组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instantiateComponent-实例化Component的函数"><span class="nav-number">3.</span> <span class="nav-text">instantiateComponent(实例化Component的函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isClass-判定组件是否是类的函数"><span class="nav-number">4.</span> <span class="nav-text">isClass(判定组件是否是类的函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合组件及DOM组件"><span class="nav-number">5.</span> <span class="nav-text">复合组件及DOM组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompositeComponent-复合组件"><span class="nav-number">5.1.</span> <span class="nav-text">CompositeComponent(复合组件)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOMComponent-DOM组件"><span class="nav-number">5.2.</span> <span class="nav-text">DOMComponent(DOM组件)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mountTree-渲染组件树的函数"><span class="nav-number">6.</span> <span class="nav-text">mountTree(渲染组件树的函数)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
