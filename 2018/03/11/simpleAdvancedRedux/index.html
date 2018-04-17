@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="simplified," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数 combineReducer和createReducer函数由于相同，此处就省略了 createStore  较之为实现中间件功能的函数，多引入了一个enhancer参数，这个参数是由applyMiddleware函数生成的，其值也是个函数，所以redux中用到了很多函数式编程的思想，中间件">
+<meta name="keywords" content="simplified">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简化加强版Redux">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/simpleAdvancedRedux/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数 combineReducer和createReducer函数由于相同，此处就省略了 createStore  较之为实现中间件功能的函数，多引入了一个enhancer参数，这个参数是由applyMiddleware函数生成的，其值也是个函数，所以redux中用到了很多函数式编程的思想，中间件">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-17T10:49:56.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简化加强版Redux">
+<meta name="twitter:description" content="simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数 combineReducer和createReducer函数由于相同，此处就省略了 createStore  较之为实现中间件功能的函数，多引入了一个enhancer参数，这个参数是由applyMiddleware函数生成的，其值也是个函数，所以redux中用到了很多函数式编程的思想，中间件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/simpleAdvancedRedux/"/>
+
+
+
+
+
+  <title>简化加强版Redux | Neo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/simpleAdvancedRedux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简化加强版Redux</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T19:55:00+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>simpleRedux的加强版，加入了中间件功能，引入了applyMiddleware和compose函数</p>
+<p>combineReducer和createReducer函数由于相同，此处就省略了</p>
+<h2 id="createStore"><a href="#createStore" class="headerlink" title="createStore"></a>createStore</h2><hr>
+<blockquote>
+<p>较之为实现中间件功能的函数，多引入了一个enhancer参数，这个参数是由applyMiddleware函数生成的，其值也是个函数，所以redux中用到了很多函数式编程的思想，中间件功能就是一个有力的体现</p>
+</blockquote>
+<blockquote>
+<p>框架源码及分析见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/redux/createStore.js" target="_blank" rel="noopener">createStore.js</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ActionTypes = &#123; <span class="attr">INIT</span>: <span class="string">'@@redux/INIT'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createStore</span>(<span class="params">reducer, preloadedState, enhancer</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 只传了两个参数的情况，createStore(reducer, applyMiddleware(...))，校正参数</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> preloadedState === <span class="string">'function'</span>) &#123;</span><br><span class="line">        enhancer = preloadedState;</span><br><span class="line">        preloadedState = <span class="literal">undefined</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> state = preloadedState;</span><br><span class="line">    <span class="keyword">let</span> listeners = [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> store = &#123;</span><br><span class="line">        subscribe : <span class="function"><span class="keyword">function</span> (<span class="params">listener</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> listener !== <span class="string">'function'</span>)</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            listeners.push(listener);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">let</span> isCleared = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (isCleared)</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                isCleared = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; listeners.length; i++)</span><br><span class="line">                    <span class="keyword">if</span> (listeners[i] === listener) &#123;</span><br><span class="line">                        listeners.splice(i, <span class="number">1</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        getState: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> state;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        dispatch: <span class="function"><span class="keyword">function</span> (<span class="params">action</span>) </span>&#123;</span><br><span class="line">            state = reducer(state, action);</span><br><span class="line">            listeners.forEach(<span class="function"><span class="params">f</span> =&gt;</span> f());</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> action;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    store.dispatch(&#123; <span class="attr">type</span>: ActionTypes.INIT &#125;);  <span class="comment">// 初始化state值</span></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* 当enhancer存在时，即传了中间件，就返回加强版store</span></span><br><span class="line"><span class="comment">     * 源码中将这些判断放在最上面，所以只能传入createStore, reducer, preloadedState来创建store，</span></span><br><span class="line"><span class="comment">     * 这里将判断放到下面来，就可以直接传入store，同时简化了enhancer的逻辑，与源码相比少了函数式的两层，</span></span><br><span class="line"><span class="comment">     * enhancer直接返回dispatch加强后的store */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> enhancer !== <span class="string">'undefined'</span>)  </span><br><span class="line">        <span class="keyword">return</span> enhancer(store);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> store;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="applyMiddleware"><a href="#applyMiddleware" class="headerlink" title="applyMiddleware"></a>applyMiddleware</h2><hr>
+<blockquote>
+<p>用函数式编程的思想，生成了一个加载了中间件的函数，本质上其实是将中间件多用了一层函数缓存罢了，我觉得函数式编程的思想本质就是通过函数的参数来缓存变量</p>
+</blockquote>
+<blockquote>
+<p>框架源码及分析见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/redux/applyMiddleware.js" target="_blank" rel="noopener">applyMiddleware.js</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span>(<span class="params">...middlewares</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">store</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 不用赋初值，下面代码总会给一个值，像源码那样给dispatch = store.dispatch，反倒会对dispatch的</span></span><br><span class="line">        <span class="comment">// 真正的值迷惑</span></span><br><span class="line">        <span class="keyword">let</span> dispatch, chain;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> middlewareAPI = &#123;</span><br><span class="line">            getState: store.getState,</span><br><span class="line">            <span class="comment">/* 关于这里不写成dispatch: dispatch，如果这样写了，dispatch的值就写死了，若上面的dispatch = </span></span><br><span class="line"><span class="comment">             * store.dispatch，则这个对象的dispatch一直就是store.dispatch，这样在中间件中调用dispatch时就是</span></span><br><span class="line"><span class="comment">             * 未加强的dispatch，无法发挥中间件作用了，若像这里未赋值，直接就报错了，这个问题可以简化为</span></span><br><span class="line"><span class="comment">             * let a = 0; const o = &#123; a: a &#125;; a = 1; console.log(o.a);  应该是0，而不是1</span></span><br><span class="line"><span class="comment">             * 因为创建o时，键名是字符串'a'，键值是变量a的值，即0，而不是变量a，键值只能是个具体的值，</span></span><br><span class="line"><span class="comment">             * 不可能是个变量，所以全局变量a不管怎么变，o.a的值只是创建o的时候，a的值，而不是变量a */</span></span><br><span class="line">            dispatch: <span class="function"><span class="params">action</span> =&gt;</span> dispatch(action)</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        chain = middlewares.map(<span class="function"><span class="params">middleware</span> =&gt;</span> middleware(middlewareAPI));</span><br><span class="line"></span><br><span class="line">        dispatch = compose(...chain)(store.dispatch);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> &#123; ...store, dispatch &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="compose"><a href="#compose" class="headerlink" title="compose"></a>compose</h2><hr>
+<blockquote>
+<p>compose函数的功能和实现其实非常简单，即假设有f,g,h函数，要实现 f(g(h(argument)))，则可以通过compose函数，composed_f = compose(f,g,g)，则composed_f(argument)就等同于f(g(h(argument)))，实现逻辑见以下代码</p>
+</blockquote>
+<blockquote>
+<p>框架源码及分析见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/redux/compose.js" target="_blank" rel="noopener">compose.js</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...funcs</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (funcs.length === <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="params">arg</span> =&gt;</span> arg;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (funcs.length === <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> funcs[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> last = funcs[funcs.length - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">const</span> rest = funcs.slice(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> rest.reduceRight(<span class="function">(<span class="params">composed, f</span>) =&gt;</span> f(composed), last(...args));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/simplified/" rel="tag"># simplified</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/simpleReactRedux/" rel="next" title="简化版ReactRedux">
+                <i class="fa fa-chevron-left"></i> 简化版ReactRedux
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/MyPromise/" rel="prev" title="MyPromise">
+                MyPromise <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Neo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#createStore"><span class="nav-number">1.</span> <span class="nav-text">createStore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applyMiddleware"><span class="nav-number">2.</span> <span class="nav-text">applyMiddleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose"><span class="nav-number">3.</span> <span class="nav-text">compose</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

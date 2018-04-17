@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next mist use-motion" lang="">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="simplified," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="&amp;emsp;&amp;emsp;Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 &amp;emsp;&amp;emsp;为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义&amp;emsp;&amp;emsp;定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 123456">
+<meta name="description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
+<meta name="keywords" content="simplified">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2018/04/17/simplePromise/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="&amp;emsp;&amp;emsp;Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 &amp;emsp;&amp;emsp;为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义&amp;emsp;&amp;emsp;定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 123456">
+<meta property="og:title" content="简化版Promise">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/simplePromise/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-03-15T04:38:17.834Z">
+<meta property="og:updated_time" content="2018-04-17T10:51:04.096Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="&amp;emsp;&amp;emsp;Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 &amp;emsp;&amp;emsp;为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义&amp;emsp;&amp;emsp;定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 123456">
+<meta name="twitter:title" content="简化版Promise">
+<meta name="twitter:description" content="Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法 为了使代码类型清晰，这里选择了使用typescript来写，源码见simplePromise.ts 类型定义定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型 1234567891011121314// executor函数类型，就是new P">
 
 
 
@@ -97,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/17/simplePromise/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/15/simplePromise/"/>
 
 
 
 
 
-  <title> | Hexo</title>
+  <title>简化版Promise | Neo</title>
   
 
 
@@ -155,7 +156,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">Neo</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -232,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/simplePromise/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/simplePromise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Neo">
@@ -241,7 +242,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Neo">
     </span>
 
     
@@ -249,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">简化版Promise</h1>
         
 
         <div class="post-meta">
@@ -261,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T17:44:08+08:00">
-                2018-04-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T12:38:00+08:00">
+                2018-03-15
               </time>
             
 
@@ -299,9 +300,9 @@
       
 
       
-        <p>&emsp;&emsp;Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法</p>
-<p>&emsp;&emsp;为了使代码类型清晰，这里选择了使用typescript来写，源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/myClass/simplePromise.ts" target="_blank" rel="noopener">simplePromise.ts</a></p>
-<h2 id="类型定义"><a href="#类型定义" class="headerlink" title="类型定义"></a>类型定义</h2><p>&emsp;&emsp;定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型</p>
+        <p>Promise可以简化异步流畅，使回调地狱变成链式的回调，这里就来说一下Promise的实现方法</p>
+<p>为了使代码类型清晰，这里选择了使用typescript来写，源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/myClass/simplePromise.ts" target="_blank" rel="noopener">simplePromise.ts</a></p>
+<h2 id="类型定义"><a href="#类型定义" class="headerlink" title="类型定义"></a>类型定义</h2><p>定义了new Promise(executor)中传入的executor的类型，以及成功/失败回调函数的类型</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// executor函数类型，就是new Promise(executor)时用的</span></span><br><span class="line"><span class="keyword">interface</span> Executor&lt;T&gt; &#123;</span><br><span class="line">    (resolve: <span class="function">(<span class="params">value: T</span>) =&gt;</span> <span class="built_in">void</span>, reject ?: <span class="function">(<span class="params">error: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 成功回调函数类型，(v: T) =&gt; void，简单起见，无返回值</span></span><br><span class="line"><span class="keyword">interface</span> Fulfilled&lt;T&gt; &#123;</span><br><span class="line">    (value: T): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 失败回调函数类型，(e: any) =&gt; void，简单起见，无返回值</span></span><br><span class="line"><span class="keyword">interface</span> Rejected &#123;</span><br><span class="line">    (error: <span class="built_in">any</span>): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="实例属性"><a href="#实例属性" class="headerlink" title="实例属性"></a>实例属性</h2><p>&emsp;&emsp;cachedValue、cachedError为缓存决议时传入的值或错误用的</p>
 <p>&emsp;&emsp;Promise实际上就是个有限状态机，其状态有两种，未决议和已决议，其中已决议又有成功和失败两种状态，所以应用到代码中state有3个值，PENDING、FULFILLED和REJECTED</p>
@@ -336,6 +337,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/simplified/" rel="tag"># simplified</a>
+          
+        </div>
+      
 
       
       
@@ -345,15 +352,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/03/11/MyRxJS/" rel="next" title="MyRxJs">
+                <i class="fa fa-chevron-left"></i> MyRxJs
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/17/simpleReact/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,7 +437,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -438,6 +445,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
             
 
           </nav>
@@ -505,7 +521,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
