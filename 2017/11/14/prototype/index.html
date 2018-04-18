@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文阐述了不同构造函数原型对象间的关系">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不同原型对象间的关系">
+<meta property="og:url" content="http://yoursite.com/2017/11/14/prototype/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="本文阐述了不同构造函数原型对象间的关系">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-18T05:43:04.795Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="不同原型对象间的关系">
+<meta name="twitter:description" content="本文阐述了不同构造函数原型对象间的关系">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/14/prototype/"/>
+
+
+
+
+
+  <title>不同原型对象间的关系 | Neo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/14/prototype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">不同原型对象间的关系</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-14T22:13:00+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文阐述了不同构造函数原型对象间的关系<br><a id="more"></a></p>
+<h1 id="自定义构造函数F"><a href="#自定义构造函数F" class="headerlink" title="自定义构造函数F"></a>自定义构造函数F</h1><blockquote>
+<p>考虑以下代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123; &#125;  <span class="comment">// 构造函数F</span></span><br><span class="line"><span class="keyword">let</span> f = <span class="keyword">new</span> F;  <span class="comment">// 构造函数的一个实例f</span></span><br><span class="line">f <span class="keyword">instanceof</span> F;  <span class="comment">// true</span></span><br><span class="line"><span class="keyword">let</span> prevPrototype = F.prototype;  <span class="comment">// 构造函数伴生的原型对象</span></span><br><span class="line"><span class="keyword">let</span> nextPrototype = &#123; &#125;;</span><br><span class="line">F.prototype = nextPrototype;  <span class="comment">// 将构造函数F的原型对象指向另一个对象</span></span><br><span class="line">f <span class="keyword">instanceof</span> F;  <span class="comment">// false</span></span><br><span class="line">f.__ptoto__ == F.prototype;  <span class="comment">// false</span></span><br><span class="line">f.__proto__ == prevPrototype;  <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>以上示例中，在F没改变原型对象前，f是F类的，而当F.prototype指向另一个对象时，f就不是F类的，因为f.__proto__还是指向原来的prevPrototype<br>所以说，在js中，类这个说法其实是没意义的，类只是只某一个实例的__proto__相对应的函数而已，而有时候这个函数根本不存在，比如这个例子中当F改变了prototype时，原来伴生的原型对象prevPrototype就没有函数与其对应，则f也不能说成是什么类的实例了</p>
+<p>还有个例子就是es6中的继承，S extends F { }，设S的实例为s，则s.__proto__ == F.prototype，构成了原型链，可以说s是S类的，F是S类的父类，s也是F类的，但是es6中的继承还有一层就是S.__proto__ == F，所以S可以继承F上的静态方法，但是F本身就是个函数，他并不是任何构造函数的prototype，则S也没办法说成是什么类的</p>
+<p>所以在js中类这个说法并没有意义，只是为了对应java, C++这种面向对象的概念罢了，实际上js中只有原型链，所有的关系都是基于原型链的<br>构造函数在构造了实例之后就与实例没有关系了，实例只和他的__proto__发生关系，构造函数只是在构造对象的时候起一个初始化的作用，对于<br>已经存在的对象来说，对应的构造函数与其关系并不大，甚至有些实例的__proto__根本不存在对应的构造函数</p>
+<blockquote>
+<p>下面来理一下js中各函数及原型对象间的关系，以及一些奇特的特性<br>以下的 ==, instanceof 返回值都是true</p>
+</blockquote>
+<blockquote>
+<p>先来最简单的构造函数及其实例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> A;</span><br><span class="line"></span><br><span class="line">a.__proto__ == A.prototype;</span><br><span class="line">a <span class="keyword">instanceof</span> A;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>A.prototype是个对象，所以A.prototype是Object构造函数的一个实例，<br>可知任意函数f.prototype.__proto__ == Object.prototype，即任意函数f伴生的prototype(除了Object.prototype)都是由Object构造的<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.prototype.__proto__ == <span class="built_in">Object</span>.prototype;</span><br><span class="line">A.prototype <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>A是一个函数，所以A是Function构造函数的一个实例<br>可知任意构造函数本身都是由Function构造的，都是Function类的一个实例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.__proto__ == <span class="built_in">Function</span>.prototype;</span><br><span class="line">A <span class="keyword">instanceof</span> <span class="built_in">Function</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="Object构造函数"><a href="#Object构造函数" class="headerlink" title="Object构造函数"></a>Object构造函数</h1><blockquote>
+<p>首先来查看Object构造函数，Object函数是由Function构造的，即Object是Function类的一个示例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.__proto__ == <span class="built_in">Function</span>.prototype;</span><br><span class="line"><span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>而Object.prototype并非由Object自身构造，作为原型链的顶层，其__proto__是null<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.__proto__ == <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>Object构造函数是Function类的一个实例，而Function的父类是Object，逻辑推理可知Object是属于Object类的<br>从原型链角度来看<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.__proto__ == <span class="built_in">Function</span>.prototype;  <span class="comment">// Object instanceof Function</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.__proto__ == <span class="built_in">Object</span>.prototype;  <span class="comment">// Function.prototype instanceof Object</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>可得<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.__proto__.__proto__ == <span class="built_in">Object</span>.prototype;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>即Object的原型链上存在Object.prototype，即Object本身属于Object类<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="Function构造函数"><a href="#Function构造函数" class="headerlink" title="Function构造函数"></a>Function构造函数</h1><blockquote>
+<p>来查看Function构造函数</p>
+</blockquote>
+<blockquote>
+<p>Function构造函数构造了所有的函数，包括Object，甚至连Function函数本身也是由自己构造的，即Function是自身的一个实例<br>而由这个特性可以推导出很多奇特的性质，下面会有示例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.__proto__ == <span class="built_in">Function</span>.prototype;</span><br><span class="line"><span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Function</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>但是Function.prototype竟然是个函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype === <span class="string">'function'</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>而Function.prototype作为一个对象，是由Object构造的，由原型链定义知Object是Function的父类<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prorotype.__proto__ == <span class="built_in">Object</span>.prototype;</span><br><span class="line"><span class="built_in">Function</span>.prototype <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>由于任意函数都是Function类的实例，而Object又是Function的父类，所以任意函数(包括Function本身)都是Object类的<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.__proto__ == <span class="built_in">Function</span>.prototype;</span><br><span class="line">Funciton.prototype.__proto__ == <span class="built_in">Object</span>.prototype;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>由上可以推导出Object.prototype存在于任意函数(包括Function本身)的原型链上，这也就是为什么说函数也是对象<br>而任意对象(Object.create(null)和Object.prototype除外)的原型链上也存在Object.prototype，所以一切皆对象<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A.__proto__.__proto__ == <span class="built_in">Object</span>.prototype;</span><br><span class="line">A <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>Function本身是Function类的一个实例，又Function的父类是Object，逻辑推理可知Function是属于Object类的<br>本质上要从原型链角度看，以上关系翻译成原型链如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.__proto__ == <span class="built_in">Function</span>.prototype;  <span class="comment">// Function instanceof Function</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.__proto__ == <span class="built_in">Object</span>.prototype  <span class="comment">// Function.prototype instanceof Object</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>可得<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.__proto__.__proto__ == <span class="built_in">Object</span>.prototype;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>即Function的原型链上存在Object.prototype，即Function也属于Object类<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>综上：</p>
+<p>1.任意函数(包括Function自身)都是Function类的</p>
+<blockquote>
+<p>A instanceof Function<br>Function instanceof Function</p>
+</blockquote>
+<p>2.一切(包括函数)皆对象<br>任意对象(Object.create(null)及Object.prototype除外)及函数(包括Object)的原型链上都存在Object.prototype，即都是Object类的</p>
+<blockquote>
+<p>A instanceof Object<br>Function instanceof Object<br>Object instanceof Object</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/31/super/" rel="next" title="javascript中的super解析">
+                <i class="fa fa-chevron-left"></i> javascript中的super解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/MyPromise/" rel="prev" title="MyPromise">
+                MyPromise <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Neo</p>
+              <p class="site-description motion-element" itemprop="description">You great hero, wish you a regretless love.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义构造函数F"><span class="nav-number">1.</span> <span class="nav-text">自定义构造函数F</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object构造函数"><span class="nav-number">2.</span> <span class="nav-text">Object构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Function构造函数"><span class="nav-number">3.</span> <span class="nav-text">Function构造函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

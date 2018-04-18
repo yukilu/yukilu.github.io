@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="simplified," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述">
+<meta name="keywords" content="simplified">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简化加强版React">
+<meta property="og:url" content="http://yoursite.com/2017/07/29/simpleAdvancedReact/index.html">
+<meta property="og:site_name" content="Neo">
+<meta property="og:description" content="simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-18T05:46:04.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简化加强版React">
+<meta name="twitter:description" content="simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/29/simpleAdvancedReact/"/>
+
+
+
+
+
+  <title>简化加强版React | Neo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Neo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/simpleAdvancedReact/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Neo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Neo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简化加强版React</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T19:53:00+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>simpleReact的加强版，加入了组件生命周期函数，一些介绍过的函数就不再赘述<br><a id="more"></a><br>完整源码见<a href="https://github.com/yukilu/sourceCodeAnalysis/blob/master/react/reactAdvancedMount.js" target="_blank" rel="noopener">simpleAdvancedReact.js</a></p>
+<h2 id="React-createElement"><a href="#React-createElement" class="headerlink" title="React.createElement"></a>React.createElement</h2><blockquote>
+<p>React.createElement(type, props, …children)</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createElement</span>(<span class="params">type, props</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!props)</span><br><span class="line">        props = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123; type, props &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="React-Component"><a href="#React-Component" class="headerlink" title="React.Component"></a>React.Component</h2><blockquote>
+<p>class MyComponent extends React.Component { … }</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span> </span>&#123; &#125;</span><br><span class="line">Component.isClass = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="instantiateComponent-实例化Component的函数"><a href="#instantiateComponent-实例化Component的函数" class="headerlink" title="instantiateComponent(实例化Component的函数)"></a>instantiateComponent(实例化Component的函数)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instantiateComponent</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> type = element.type;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CompositeComponent(element);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'string'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DOMComponent(element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="isClass-判定组件是否是类的函数"><a href="#isClass-判定组件是否是类的函数" class="headerlink" title="isClass(判定组件是否是类的函数)"></a>isClass(判定组件是否是类的函数)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isClass</span>(<span class="params">type</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span> &amp;&amp; type.isClass)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="复合组件及DOM组件"><a href="#复合组件及DOM组件" class="headerlink" title="复合组件及DOM组件"></a>复合组件及DOM组件</h2><h3 id="CompositeComponent-复合组件"><a href="#CompositeComponent-复合组件" class="headerlink" title="CompositeComponent(复合组件)"></a>CompositeComponent(复合组件)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CompositeComponent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(element) &#123;</span><br><span class="line">        <span class="keyword">this</span>.currentElement = element;</span><br><span class="line">        <span class="keyword">this</span>.renderedComponent = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.publicInstance = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回挂载的react组件的实例</span></span><br><span class="line">    getPublicInstance() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.publicInstance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// renderedComponent为CompositeComponent时，递归调用getHostNode，直到遇到DOM组件，返回node</span></span><br><span class="line">    getHostNode() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.renderedComponent.getHostNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mount() &#123;</span><br><span class="line">        <span class="keyword">const</span> element = <span class="keyword">this</span>.currentElement;</span><br><span class="line">        <span class="keyword">const</span> type = element.type;</span><br><span class="line">        <span class="keyword">const</span> props = element.props;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> publicInstance = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> renderedElement = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> renderedComponent = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (isClass(type)) &#123;</span><br><span class="line">            publicInstance = <span class="keyword">new</span> type(props);</span><br><span class="line">            publicInstance.props = props;</span><br><span class="line">            <span class="comment">// 组件生命周期componentWillMount在此处调用，然后再调用render</span></span><br><span class="line">            <span class="keyword">if</span> (publicInstance.componentWillMount)</span><br><span class="line">                publicInstance.componentWillMount();</span><br><span class="line">            renderedElement = publicInstance.render();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> type === <span class="string">'function'</span>) &#123;</span><br><span class="line">            publicInstance = <span class="literal">null</span>;</span><br><span class="line">            renderedElement = type(props);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">        <span class="keyword">this</span>.publicInstance = publicInstance;</span><br><span class="line">        <span class="keyword">this</span>.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> renderedComponent.mount();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 组件生命周期componentWillUnmount在此处调用，并通过renderedComponent.unmount，层层递归，</span></span><br><span class="line"><span class="comment">     * 层层往下调用unmount</span></span><br><span class="line"><span class="comment">     * rtC = rootComponent, rC = renderedComponent, um = unmount</span></span><br><span class="line"><span class="comment">     * rtC.um() -&gt; rtC.rC.um() -&gt; rtC.rC.rC.um() -&gt; ... -&gt; rtC.rC...rC.um()</span></span><br><span class="line"><span class="comment">     * 遇到DOMComponent时，子组件childComponents中，每个调用unmount()，然后就回到上述过程</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    unmount() &#123;</span><br><span class="line">        <span class="keyword">const</span> publicInstance = <span class="keyword">this</span>.publicInstance;</span><br><span class="line">        <span class="keyword">const</span> renderedComponent = <span class="keyword">this</span>.renderedComponent;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (publicInstance &amp;&amp; publicInstance.componentWillUnmount)</span><br><span class="line">            publicInstance.componentWillUnmount();</span><br><span class="line"></span><br><span class="line">        renderedComponent.unmount();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 合成组件，prevElement.type === nextElement.type时，调用receive函数，该函数有两个作用</span></span><br><span class="line"><span class="comment">     * 1. 由于type相同，所以该Component下挂载的react组件的publicInstance不用更改，只需要更改props，</span></span><br><span class="line"><span class="comment">     * 并重新render</span></span><br><span class="line"><span class="comment">     * 2. 比较上述元素的新的renderedElement的type与旧的renderedElement的type是否相同</span></span><br><span class="line"><span class="comment">     *    prevRenderedElement.type === nextRenderedElement.type</span></span><br><span class="line"><span class="comment">     *    1) true，即相同时，调用prevRenderedComponent.receive(nextRenderedElement)，</span></span><br><span class="line"><span class="comment">     * 继续调用rendered组件的receive，而不需要新实例化组件</span></span><br><span class="line"><span class="comment">     *    2) false，即不同时，通过instantiateComponent(nextRenderedElement)实例化新组件，</span></span><br><span class="line"><span class="comment">     * 将旧组件unmout掉，并用新节点替换旧节点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    receive(nextElement) &#123;</span><br><span class="line">        <span class="keyword">const</span> publicInstance = <span class="keyword">this</span>.publicInstance;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> prevProps = <span class="keyword">this</span>.currentElement.props;</span><br><span class="line">        <span class="keyword">const</span> prevRenderedComponent = <span class="keyword">this</span>.renderedComponent;</span><br><span class="line">        <span class="keyword">const</span> prevRenderedElement = prevRenderedComponent.currentElement;</span><br><span class="line">        <span class="keyword">let</span> prevRenderedNode = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 挂载新的element，其实type相同，只有props不同</span></span><br><span class="line">        <span class="keyword">this</span>.currentElement = nextElement;</span><br><span class="line">        <span class="keyword">const</span> nextType = nextElement.type;</span><br><span class="line">        <span class="keyword">const</span> nextProps = nextElement.props;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> nextRenderedElement = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> nextRenderedComponent = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> nextRenderedNode = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断即将更新的元素的type为class或普通函数</span></span><br><span class="line">        <span class="keyword">if</span> (isClass(nextType)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (publicInstance.componentWillUpdate)  <span class="comment">// 生命周期的componentWillUpdate</span></span><br><span class="line">                publicInstance.componentWillUpdate(nextProps);</span><br><span class="line">            <span class="comment">// react实例还为原来实例，而实例的props更改为新元素的props，并重新render，返回新的renderedElement</span></span><br><span class="line">            publicInstance.props = nextProps;</span><br><span class="line">            nextRenderedElement = publicInstance.render();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> nextType === <span class="string">'function'</span>)</span><br><span class="line">            nextRenderedElement = nextType(nextProps);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 新旧renderedElement的type相同时，继续调用prevRenderedComponent.receive(nextRenderedElement)，</span></span><br><span class="line"><span class="comment">         * 以此实现层层往下调用receive，但是注意，千万不要通过判断prevPros === nextProps相同时，</span></span><br><span class="line"><span class="comment">         * 就不调用receive函数，这样会造成receive无法层层调用，会使再下层的组件改变时却无法重新渲染</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (nextRenderedElement.type === prevRenderedElement.type) &#123;</span><br><span class="line">            prevRenderedComponent.receive(nextRenderedElement);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 新旧renderedElement的type不同时</span></span><br><span class="line">        <span class="comment">// 通过prevRenderedComponent.getHostNode()获得旧节点，并通过unmount()来调用</span></span><br><span class="line">        <span class="comment">// react组件生命周期的componentWillUnmount</span></span><br><span class="line">        prevRenderedNode = prevRenderedComponent.getHostNode();</span><br><span class="line">        prevRenderedComponent.unmount();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过新的renderedElement获得新的renderedComponent，并通过mount()得到新节点</span></span><br><span class="line">        nextRenderedComponent = instantiateComponent(nextRenderedElement);</span><br><span class="line">        nextRenderedNode = nextRenderedComponent.mount();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 用新节点替换旧节点</span></span><br><span class="line">        prevRenderedNode.parentNode.replaceChild(nextRenderedNode, prevRenderedNode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DOMComponent-DOM组件"><a href="#DOMComponent-DOM组件" class="headerlink" title="DOMComponent(DOM组件)"></a>DOMComponent(DOM组件)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DOMComponent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(element) &#123;</span><br><span class="line">        <span class="keyword">this</span>.currentElement = element;</span><br><span class="line">        <span class="keyword">this</span>.childComponents = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.node = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getHostNode() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mount() &#123;</span><br><span class="line">        <span class="keyword">const</span> element = <span class="keyword">this</span>.currentElement;</span><br><span class="line">        <span class="keyword">const</span> type = element.type;</span><br><span class="line">        <span class="keyword">const</span> props = element.props;</span><br><span class="line">        <span class="keyword">let</span> children = props.children;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> childComponents = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">let</span> childNodes = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> node = <span class="built_in">document</span>.createElement(type);</span><br><span class="line">        <span class="keyword">this</span>.node = node;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Object</span>.keys(props).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (propName !== <span class="string">'children'</span>)</span><br><span class="line">                node.setAttribute(propName, props[propName]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!children)</span><br><span class="line">            children = [];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(children))</span><br><span class="line">            children = [children];</span><br><span class="line"></span><br><span class="line">        childComponents = children.map(instantiateComponent);</span><br><span class="line">        <span class="keyword">this</span>.childComponents = childComponents;</span><br><span class="line"></span><br><span class="line">        childNodes = childComponents.map(<span class="function"><span class="params">childComponent</span> =&gt;</span> childComponent.mount());</span><br><span class="line">        childNodes.map(<span class="function"><span class="params">childNode</span> =&gt;</span> &#123;</span><br><span class="line">            node.appendChild(childNode);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DOM组件的子元素组件逐个unmount()</span></span><br><span class="line">    unmount() &#123;</span><br><span class="line">        <span class="keyword">const</span> childComponents = <span class="keyword">this</span>.childComponents;</span><br><span class="line">        childComponents.forEach(<span class="function"><span class="params">childComponent</span> =&gt;</span> &#123;</span><br><span class="line">            childComponent.unmount();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* DOM组件的receive函数作用有二</span></span><br><span class="line"><span class="comment">     * 1. 对当前DOM组件下挂载的DOM节点，根据新props更新DOM节点上的属性</span></span><br><span class="line"><span class="comment">     * 2. 对DOM组件下的子组件，重新处理，当然实际react处理时会根据key值来处理，此处简化处理，分为以下几种情况</span></span><br><span class="line"><span class="comment">     *    1) 旧的子组件个数大于等于新的子组件</span></span><br><span class="line"><span class="comment">     *    2) 旧的子组件个数少于新的子组件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    receive(nextElement) &#123;</span><br><span class="line">        <span class="keyword">const</span> node = <span class="keyword">this</span>.node;</span><br><span class="line">        <span class="keyword">const</span> prevProps = <span class="keyword">this</span>.currentElement.props;</span><br><span class="line">        <span class="keyword">const</span> nextProps = nextElement.props;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.currentElement = nextElement;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移除DOM组件中非children及nextProps中不存在的属性</span></span><br><span class="line">        <span class="built_in">Object</span>.keys(prevProps).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (propName !== <span class="string">'children'</span> &amp;&amp; !nextProps.hasOwnProperty(propName))</span><br><span class="line">                node.removeAttribute(propName);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据nextProps中的属性更新DOM组件中的属性</span></span><br><span class="line">        <span class="built_in">Object</span>.keys(nextProps).forEach(<span class="function"><span class="params">propName</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (propName !== <span class="string">'children'</span>)</span><br><span class="line">                node.setAttribute(propName, nextProps[propName]);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 处理单个元素时，children为非数组，prevChildren, nextChildren实际上是元素的数组，</span></span><br><span class="line"><span class="comment">         * prevChildElements, nextChildElements</span></span><br><span class="line"><span class="comment">         * prevChildren, nextChildren 形如 [ &#123; type: A, props &#125;, &#123; type: B, props &#125;, </span></span><br><span class="line"><span class="comment">         * &#123; type: 'p', props &#125; ]</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">let</span> prevChildren = prevProps.children || [];</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(prevChildren))</span><br><span class="line">            prevChildren = [prevChildren];</span><br><span class="line">        <span class="keyword">let</span> nextChildren = nextProps.children || [];</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(nextChildren))</span><br><span class="line">            nextChildren = [nextChildren];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> prevChildComponents = <span class="keyword">this</span>.childComponents;</span><br><span class="line">        <span class="keyword">const</span> nextChildComponents = [];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 操作队列，存储操作元素</span></span><br><span class="line">        <span class="keyword">const</span> operationQueue = [];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理DOM组件的新子元素数组，nextChildren</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; nextChildren.length; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> prevChildElement = prevChildren[i];   <span class="comment">// 旧的子元素数组对应的子元素</span></span><br><span class="line">            <span class="keyword">const</span> prevChildComponent = prevChildComponents[i];  <span class="comment">// 旧的子组件数组对应的子组件</span></span><br><span class="line">            <span class="keyword">let</span> prevNode = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">const</span> nextChildElement = nextChildren[i];   <span class="comment">// 新的子元素数组对应的子元素</span></span><br><span class="line">            <span class="keyword">let</span> nextChildComponent = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">let</span> nextNode = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* prevChild不存在时，即当prevChildren的数组长度小于nextChildren时，</span></span><br><span class="line"><span class="comment">             * 处理nextChildren后面多出的部分，添加即可</span></span><br><span class="line"><span class="comment">             * 形如 prevChildren [ &#123; type: A &#125;, &#123; type: 'p' &#125; ]</span></span><br><span class="line"><span class="comment">             *      nextChildren [ &#123; type: A &#125;, &#123; type: B &#125;, &#123; type: C &#125;, &#123; type: 'span' &#125; ]</span></span><br><span class="line"><span class="comment">             * 当 i = 2, 3 时，prevChildComponents[i]为undefined，进入这里</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">if</span> (!prevChildComponent) &#123;</span><br><span class="line">                nextChildComponent = instantiateComponent(nextChildElement);  <span class="comment">// 根据新子元素实例化</span></span><br><span class="line">                nextNode = nextChildComponent.mount();    <span class="comment">// 通过对上面的实例进行mount得到新节点</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 将上面实例化的新实例添加到新的子组件数组中</span></span><br><span class="line">                nextChildComponents.push(nextChildComponent);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// operation的操作为添加 ADD，对应node.append(node)</span></span><br><span class="line">                operationQueue.push(&#123; <span class="attr">type</span>: <span class="string">'ADD'</span>, <span class="attr">node</span>: nextNode &#125;);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// prevChild和nextChild都存在时</span></span><br><span class="line">            <span class="comment">// 判断该子元素element的type是否相同</span></span><br><span class="line">            <span class="keyword">const</span> canUpdate = prevChildElement.type === nextChildElement.type;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//element的type不同时</span></span><br><span class="line">            <span class="keyword">if</span> (!canUpdate) &#123;</span><br><span class="line">                prevNode = prevChildComponent.getHostNode();  <span class="comment">// 获取旧节点</span></span><br><span class="line">                prevChildComponent.unmount();   <span class="comment">// 旧Component的unmount</span></span><br><span class="line"></span><br><span class="line">                nextChildComponent = instantiateComponent(nextChildElement);</span><br><span class="line">                nextNode = nextChildComponent.mount();  <span class="comment">// 获取新节点</span></span><br><span class="line"></span><br><span class="line">                nextChildComponents.push(nextChildComponent);   <span class="comment">// 添加新增的组件实例</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 操作队列中添加操作替换 REPLACE，对应node.replace(newNode, oldNode)</span></span><br><span class="line">                operationQueue.push(&#123; <span class="attr">type</span>: <span class="string">'REPLACE'</span>, prevNode, nextNode &#125;);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//element的type相同时，只需要调用receive，操作队列不需要添加操作</span></span><br><span class="line">            prevChildComponent.receive(nextChildElement);</span><br><span class="line">            <span class="comment">// nextChildComponents只需要添加原组件即可</span></span><br><span class="line">            nextChildComponents.push(prevChildComponent);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* 当prevChildren元素多与nextChildren时，处理prevChildren多出来的部分，删除即可</span></span><br><span class="line"><span class="comment">         * 形如 prevChildren [ &#123; type: A &#125;, &#123; type: B &#125;, &#123; type: 'p' &#125;, &#123; type: C &#125; ]</span></span><br><span class="line"><span class="comment">         *      nextChildren [ &#123; type: A &#125;, &#123; type: 'span' &#125; ]</span></span><br><span class="line"><span class="comment">         * for (let i = 2; i &lt; 4; i++) &#123; ... &#125;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = nextChildren.length; i &lt; prevChildren.length; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> prevChildComponent = prevChildComponents[i];</span><br><span class="line">            <span class="keyword">const</span> prevNode = prevChildComponent.getHostNode();  <span class="comment">// 获取旧节点并在下面unmount</span></span><br><span class="line"></span><br><span class="line">            prevChildComponent.unmount();</span><br><span class="line"></span><br><span class="line">            operationQueue.push(&#123; <span class="attr">type</span>: <span class="string">'REMOVE'</span>, <span class="attr">node</span>: prevNode &#125;);    <span class="comment">// 删除对应的旧节点</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.childComponents = nextChildComponents; <span class="comment">// 将新组件数组更新到实例上</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行操作队列，通过switch来执行对应的DOM操作</span></span><br><span class="line">        <span class="keyword">while</span> (operationQueue.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">const</span> operation = operationQueue.shift();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">switch</span> (operation.type) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'ADD'</span>:</span><br><span class="line">                    node.appendChild(operation.node);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'REPLACE'</span>:</span><br><span class="line">                    node.replaceChild(operation.nextNode, operation.prevNode);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'REMOVE'</span>:</span><br><span class="line">                    node.removeChild(operation.node);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">`Not find operation.type[<span class="subst">$&#123;operation.type&#125;</span>]`</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="mountTree-渲染组件树的函数"><a href="#mountTree-渲染组件树的函数" class="headerlink" title="mountTree(渲染组件树的函数)"></a>mountTree(渲染组件树的函数)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mountTree</span>(<span class="params">element, containerNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> nextRootElement = element;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// containerNode中原来已有子节点</span></span><br><span class="line">    <span class="keyword">if</span> (containerNode.firstChild) &#123;</span><br><span class="line">        <span class="comment">// 获取唯一子节点，即组件树的根节点</span></span><br><span class="line">        <span class="keyword">const</span> prevRootNode = containerNode.firstChild;</span><br><span class="line">        <span class="comment">// 通过下面挂载的_internalInstance属性追溯到根组件</span></span><br><span class="line">        <span class="keyword">const</span> prevRootComponent = prevRootNode._internalInstance;</span><br><span class="line">        <span class="comment">// 获取当前组件下的对应element</span></span><br><span class="line">        <span class="keyword">const</span> prevRootElement = prevRootComponent.currentElement;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 当新旧element.type相同时，直接调用receive更新props，并重新render渲染</span></span><br><span class="line">        <span class="keyword">if</span> (prevRootElement.type === nextRootElement.type) &#123;</span><br><span class="line">            prevRootComponent.receive(nextRootElement);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 新旧element.type不同时，清空containerNode，并进入以下代码重新渲染组件树</span></span><br><span class="line">        unmountTree(containerNode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// containerNode为空，没有子节点</span></span><br><span class="line">    <span class="keyword">const</span> rootComponent = instantiateComponent(element);</span><br><span class="line">    <span class="keyword">const</span> rootNode = rootComponent.mount();</span><br><span class="line">    <span class="comment">// 在根节点上挂载一个属性指向rootComponent，就可以通过根节点追溯根组件</span></span><br><span class="line">    rootNode._internalInstance = rootComponent;</span><br><span class="line"></span><br><span class="line">    containerNode.appendChild(rootNode);  <span class="comment">// 将根节点加入containerNode中</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> publicInstance = rootComponent.getPublicInstance();</span><br><span class="line">    <span class="keyword">return</span> publicInstance;  <span class="comment">// 将根组件上的react组件的实例返回</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unmountTree</span>(<span class="params">containerNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> rootNode = containerNode.firstChild;  <span class="comment">// 获取根节点</span></span><br><span class="line">    <span class="comment">// 通过_internalInstance追溯到根组件，并在下面调用unmount</span></span><br><span class="line">    <span class="keyword">const</span> rootComponent = rootNode._internalInstance;</span><br><span class="line"></span><br><span class="line">    rootComponent.unmount();</span><br><span class="line">    containerNode.innerHTML = <span class="string">''</span>;   <span class="comment">// 清空containerNode</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/simplified/" rel="tag"># simplified</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/simpleReact/" rel="next" title="简化版React">
+                <i class="fa fa-chevron-left"></i> 简化版React
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/13/simpleReactRedux/" rel="prev" title="简化版ReactRedux">
+                简化版ReactRedux <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Neo</p>
+              <p class="site-description motion-element" itemprop="description">You great hero, wish you a regretless love.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React-createElement"><span class="nav-number">1.</span> <span class="nav-text">React.createElement</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Component"><span class="nav-number">2.</span> <span class="nav-text">React.Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instantiateComponent-实例化Component的函数"><span class="nav-number">3.</span> <span class="nav-text">instantiateComponent(实例化Component的函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isClass-判定组件是否是类的函数"><span class="nav-number">4.</span> <span class="nav-text">isClass(判定组件是否是类的函数)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合组件及DOM组件"><span class="nav-number">5.</span> <span class="nav-text">复合组件及DOM组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompositeComponent-复合组件"><span class="nav-number">5.1.</span> <span class="nav-text">CompositeComponent(复合组件)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOMComponent-DOM组件"><span class="nav-number">5.2.</span> <span class="nav-text">DOMComponent(DOM组件)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mountTree-渲染组件树的函数"><span class="nav-number">6.</span> <span class="nav-text">mountTree(渲染组件树的函数)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Neo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
